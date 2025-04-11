@@ -1,7 +1,7 @@
-export default async function getDictionary(): Promise<any> {
+export default async function getDictionary(word: string): Promise<any> {
   try {
     const response = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/hello`
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
     );
 
     if (!response.ok) {
