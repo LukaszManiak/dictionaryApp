@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  background-color: #f7fafd;
+}
+
 @layer base {
   :root {
     --text: #040a10;
