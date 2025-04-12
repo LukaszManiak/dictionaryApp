@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 html {
-  background-color: #f7fafd;
+  background-color: var(--background);
+  color: var(--text);
+  transition: all 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 @layer base {

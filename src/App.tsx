@@ -4,7 +4,7 @@ import getDictionary from "./dictionaryApi";
 import LoadingMessage from "./components/LoadingMessage";
 import ErrorMessage from "./components/ErrorMessage";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Inputs = {
   dictionaryRequired: string;
@@ -12,6 +12,7 @@ type Inputs = {
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("dictionary");
+  const [darkMode, setDarkMode] = useState(false);
 
   const {
     register,
@@ -28,14 +29,27 @@ function App() {
     setSearchTerm(formData.dictionaryRequired);
   };
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   if (isPending) return <LoadingMessage />;
   if (isError) return <ErrorMessage error={error} />;
 
   return (
-    <main className="w-1/2 flex flex-col gap-y-6 p-8 mx-auto">
+    <main className="w-full xl:w-1/2 flex flex-col gap-y-6 p-12 xl:p-8 mx-auto">
       <div className="flex justify-between items-center">
         <p className="text-4xl font-bold tracking-widest">Dicto</p>
-        <button className="rounded-full bg-accent text-background">Mode</button>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="rounded-full bg-[var(--primary)] px-4 py-2 text-background cursor-pointer"
+        >
+          Mode
+        </button>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mb-4 flex gap-2">
@@ -43,11 +57,11 @@ function App() {
           {...register("dictionaryRequired", { required: true })}
           type="text"
           placeholder="Find your word"
-          className="rounded-full px-6 py-2 flex-1 bg-gray-100"
+          className="rounded-full text-[var(--text)] border-2 border-[var(--accent)] px-6 py-2 flex-1 "
         />
         <button
           type="submit"
-          className="bg-purple-400 text-white rounded-full px-4 py-2 cursor-pointer"
+          className="bg-[var(--accent)] text-[var(--background)] rounded-full px-4 py-2 cursor-pointer"
         >
           Search
         </button>
