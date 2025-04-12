@@ -91,7 +91,7 @@ function App() {
       <span className="text-gray-500">
         Source{" "}
         <a
-          className="text-purple-300"
+          className="text-purple-300  break-words"
           target="_blank"
           href={data?.[0].sourceUrls}
         >
