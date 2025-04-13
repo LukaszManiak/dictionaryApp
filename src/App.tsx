@@ -93,15 +93,11 @@ function App() {
         <div className="gap-y-4 flex flex-col" key={i}>
           <p className="font-bold text-2xl">{m.partOfSpeech}</p>
           <p className="font-bold text-3xl">Meaning</p>
-          <ul className="list-disc list-inside gap-y-2 flex flex-col">
+          <ul className="list-disc list-inside ">
             {m.definitions.map((def, defInd) => (
               <li key={defInd}>
                 {def.definition}
-                {def.synonyms && (
-                  <p className="text-sm text-gray-400">
-                    Synonyms: {def.synonyms.join(", ")}
-                  </p>
-                )}
+
                 {def.example && (
                   <p className="text-sm italic text-gray-500">
                     Example: “{def.example}”
