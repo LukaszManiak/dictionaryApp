@@ -1,4 +1,8 @@
-export default async function getDictionary(word: string): Promise<any> {
+import { DictionaryDefinition } from "./App";
+
+export default async function getDictionary(
+  word: string
+): Promise<DictionaryDefinition[] | null> {
   try {
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`

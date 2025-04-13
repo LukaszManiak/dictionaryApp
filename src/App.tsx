@@ -10,6 +10,22 @@ type Inputs = {
   dictionaryRequired: string;
 };
 
+export type DictionaryDefinition = {
+  word: string;
+  phonetic?: string;
+  synonyms?: string[];
+  sourceUrls?: string[];
+  meanings: {
+    partOfSpeech: string;
+    definitions: {
+      definition: string;
+      example?: string;
+      synonyms?: string[];
+      antonyms?: string[];
+    }[];
+  }[];
+};
+
 function App() {
   const [searchTerm, setSearchTerm] = useState("dictionary");
   const [darkMode, setDarkMode] = useState(false);
@@ -73,30 +89,43 @@ function App() {
       <h1 className="text-6xl font-bold tracking-wider">{data?.[0]?.word}</h1>
       <h2 className="text-4xl text-purple-400">{data?.[0]?.phonetic}</h2>
 
-      {data?.[0].meanings.map((m, i: number) => {
-        return (
-          <div className="gap-y-4 flex flex-col" key={i}>
-            <p className="font-bold text-2xl">{m.partOfSpeech}</p>
-            <p className="font-bold text-3xl ">Meaning</p>
-            <ul className="list-disc list-inside gap-y-2 flex flex-col">
-              {m.definitions.map((def, defInd: number) => (
-                <li key={defInd}>{def.definition}</li>
-              ))}
-            </ul>
-            <p>{m.synonyms}</p>
-          </div>
-        );
-      })}
+      {data?.[0].meanings.map((m, i) => (
+        <div className="gap-y-4 flex flex-col" key={i}>
+          <p className="font-bold text-2xl">{m.partOfSpeech}</p>
+          <p className="font-bold text-3xl">Meaning</p>
+          <ul className="list-disc list-inside gap-y-2 flex flex-col">
+            {m.definitions.map((def, defInd) => (
+              <li key={defInd}>
+                {def.definition}
+                {def.synonyms && (
+                  <p className="text-sm text-gray-400">
+                    Synonyms: {def.synonyms.join(", ")}
+                  </p>
+                )}
+                {def.example && (
+                  <p className="text-sm italic text-gray-500">
+                    Example: “{def.example}”
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
 
       <span className="text-gray-500">
         Source{" "}
-        <a
-          className="text-purple-300  break-words"
-          target="_blank"
-          href={data?.[0].sourceUrls}
-        >
-          {data?.[0].sourceUrls}
-        </a>
+        {data?.[0].sourceUrls?.map((url, i) => (
+          <a
+            key={i}
+            className="text-purple-300 break-words block"
+            target="_blank"
+            href={url}
+            rel="noopener noreferrer"
+          >
+            {url}
+          </a>
+        ))}
       </span>
     </main>
   );
