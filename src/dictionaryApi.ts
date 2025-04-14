@@ -9,14 +9,15 @@ export default async function getDictionary(
     );
 
     if (!response.ok) {
-      throw new Error(`Something went wrong`);
+      throw new Error(
+        `Something went wrong. Please refresh the page and try again.`
+      );
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching dictionary data:", error);
-    return null;
+    throw error;
   }
 }
